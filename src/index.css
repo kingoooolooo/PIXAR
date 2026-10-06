@@ -1,0 +1,347 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #07090a;
+  --ivory: #efe6cf;
+  --teal: #efe6cf;
+  --surface-1: #101214;
+  --surface-2: #16181b;
+  --line: rgba(239, 230, 207, 0.14);
+  --text-muted: rgba(239, 230, 207, 0.65);
+  --teal-deep: #25282c;
+  --teal-glow: rgba(239, 230, 207, 0.15);
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans: "Hanken Grotesk", "Instrument Sans", system-ui, sans-serif;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ivory: var(--ivory);
+  --color-teal: var(--ivory);
+  --color-s1: var(--surface-1);
+  --color-s2: var(--surface-2);
+  --color-line: var(--line);
+  --color-muted: var(--text-muted);
+  --color-deep: var(--teal-deep);
+  --font-serif: var(--serif);
+  --font-display: "Instrument Serif", "Bricolage Grotesque", Georgia, serif;
+  --font-sans: var(--sans);
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+html {
+  color-scheme: dark;
+}
+body {
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  overflow-wrap: break-word;
+}
+/* dot grid and grain: the only textures */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(color-mix(in srgb, var(--ivory) 16%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.35;
+  z-index: 0;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .91 0 0 0 0 .89 0 0 0 0 .83 0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+#root {
+  position: relative;
+  z-index: 1;
+}
+::selection {
+  background: var(--teal);
+  color: var(--ink);
+}
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ivory) 28%, transparent) transparent;
+}
+button,
+[role="button"] {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+/* Type scale */
+.t-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.9rem, 1rem + 6.6vw, 8.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+}
+.t-h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 1rem + 3vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.t-h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.2rem, 0.9rem + 0.9vw, 1.9rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.t-lead {
+  font-size: clamp(1.05rem, 0.75rem + 0.55vw, 1.5rem);
+  line-height: 1.45;
+  max-width: 62ch;
+}
+.t-body {
+  font-size: clamp(1rem, 0.75rem + 0.45vw, 1.3rem);
+  line-height: 1.45;
+}
+.t-small {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ivory);
+}
+
+/* Surfaces */
+.panel {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.panel-2 {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+.frame {
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: color-mix(in srgb, var(--ink) 97%, var(--teal) 3%);
+}
+.stage-pad {
+  padding: clamp(1.1rem, 2.6vw, 3.25rem);
+}
+.hatch {
+  background-image: repeating-linear-gradient(135deg, color-mix(in srgb, var(--ink) 55%, transparent) 0 2px, transparent 2px 7px);
+}
+.ivory-sheet {
+  background: var(--ivory);
+  color: var(--ink);
+}
+
+/* Illustration */
+.il * {
+  vector-effect: non-scaling-stroke;
+}
+.il-part {
+  transition: transform 0.6s var(--ease-out);
+}
+.il-hot {
+  cursor: pointer;
+}
+.hs-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ring 2.2s var(--ease-out) infinite;
+}
+
+/* Keyframes */
+@keyframes beam-sweep {
+  0% {
+    transform: translateY(-70px);
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(var(--h));
+    opacity: 0;
+  }
+}
+@keyframes ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+@keyframes pxl {
+  0% {
+    opacity: 0;
+  }
+  45% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sq-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes slide-up {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.fade-in {
+  animation: fadein 0.2s ease-out;
+}
+.pop-in {
+  animation: slide-up 0.32s var(--ease-out);
+}
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+dialog {
+  margin: auto;
+  background: var(--surface-2);
+  color: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 0;
+  max-width: min(94vw, 760px);
+  max-height: 90dvh;
+}
+dialog::backdrop {
+  background: color-mix(in srgb, var(--ink) 78%, transparent);
+  backdrop-filter: blur(3px);
+}
+dialog.sheet {
+  margin: auto 0 0 0;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 28px 28px 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print: Lean Canvas on one A4 landscape page, certificate on its own */
+@page {
+  size: A4 landscape;
+  margin: 8mm;
+}
+@media print {
+  * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  html,
+  body,
+  #root {
+    height: auto !important;
+    overflow: visible !important;
+    background: #e8e4d3 !important;
+  }
+  body::before,
+  body::after {
+    display: none !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .app-shell,
+  .app-body,
+  #stage,
+  .demo-root,
+  .demo-main {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+  .canvas-sheet {
+    width: 281mm !important;
+    height: 192mm !important;
+    --cs: 7.2pt;
+    border: none !important;
+    break-inside: avoid;
+  }
+  body.printing-cert .cert-hide {
+    display: none !important;
+  }
+  body.printing-cert .cert-sheet {
+    width: 281mm !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+}
